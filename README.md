@@ -39,7 +39,8 @@ ___
 ```sh
 # 1️⃣ Build & start 
 
-  
+#   docker run -p 5173:5173 --name todo-frontend todo-frontend
+
 
 # 2️⃣ Install frontend dependencies
 npm install
@@ -53,10 +54,10 @@ ___
 
 ## ToDo
 - [ ] Initialize
-    - [ ] Git
+    - [x] Git
     - [ ] Docker
       - [ ] compose
-      - [ ] Run FE
+      - [x] Run FE
       - [ ] Run BE
       - [ ] Run DB
 - [ ] Frontend
