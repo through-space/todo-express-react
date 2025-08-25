@@ -61,7 +61,7 @@ ___
       - [ ] Run BE
       - [ ] Run DB
 - [ ] Frontend
-  - [ ] Vite
+  - [x] Vite
   - [ ] ts 
     - [ ] ts aliasing
     - [ ] ts aliasing

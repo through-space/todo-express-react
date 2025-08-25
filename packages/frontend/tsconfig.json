@@ -12,6 +12,9 @@
       "@services/*": [
         "src/services/*"
       ],
+      "@pages/*": [
+        "src/pages/*"
+      ],
       "@hooks/*": [
         "src/hooks/*"
       ],
