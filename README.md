@@ -55,7 +55,15 @@ For local FS Development with Hot Reload
 >BackendEnd:  http://localhost:3000/
 
 ```sh
-   docker compose up --build    
+## Initialize DB. Run Once 
+  docker compose run backend npx prisma migrate dev --name init
+  
+```
+
+```sh
+  
+## Run Docker-Compose
+  docker compose up --build
 ```
 
 ___
@@ -79,6 +87,8 @@ ___
 - [ ] Backend
   - [x] ts
   - [x] prettier
-  - [ ] Prisma + Postgres
+  - [x] Prisma + Postgres
   - [ ] Router
+    - [x] init
+  - [ ] Tasks Controller && Repo
   - [ ] Error Handling
