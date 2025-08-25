@@ -36,17 +36,27 @@ ___
 - [Node.js](https://nodejs.org/en/download) >= 22.12.0
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
+#### Copy .env file
 ```sh
-# 1️⃣ Build & start 
+cp .env.example .env
+```
+- Alter .env vars
 
-#   docker run -p 5173:5173 --name todo-frontend todo-frontend
+#### Full Stack
+```sh
 
+```
 
-# 2️⃣ Install frontend dependencies
+#### Frontend Only
+```sh
+# Build & start
+cd packages/frontend 
 npm install
-
-# 3️⃣ Start frontend dev server (hot reload)
 npm run dev
+
+# Docker with Hot Reload
+docker build -t todo-frontend .
+npm run frontend-docker 
 
 ```
 
@@ -56,24 +66,21 @@ ___
 - [ ] Initialize
     - [x] Git
     - [ ] Docker
-      - [ ] compose
+      - [x] compose
       - [x] Run FE
-      - [ ] Run BE
-      - [ ] Run DB
+      - [x] Run BE
+      - [x] Run DB
 - [ ] Frontend
   - [x] Vite
   - [ ] ts 
-    - [ ] ts aliasing
-    - [ ] ts aliasing
-  - [ ] prettier 
+    - [x] ts aliasing
+  - [x] prettier 
   - [ ] Design
       - [ ] add tailwind
   - [ ] Error Handling
-  - [ ] Error Handling
 - [ ] Backend
-  - [ ] ts
-      - [ ] ts aliasing
-      - [ ] ts aliasing
-  - [ ] prettier
-    - [ ] Router
+  - [x] ts
+  - [x] prettier
+  - [ ] Prisma + Postgres
+  - [ ] Router
   - [ ] Error Handling
