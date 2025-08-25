@@ -28,7 +28,7 @@ ___
 
 ___
 
-## Get Started
+## Getting Started
 
 ### Development
 
@@ -36,28 +36,26 @@ ___
 - [Node.js](https://nodejs.org/en/download) >= 22.12.0
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
-#### Copy .env file
+#### Installation
 ```sh
-cp .env.example .env
+### BE+FE Packages
+npm run install
+```
+
+##### Copy .env file
+```sh
+  cp .env.example .env
 ```
 - Alter .env vars
 
-#### Full Stack
+
+#### Run in Docker
+For local FS Development with Hot Reload
+>FrontEnd:  http://localhost:5173/
+>BackendEnd:  http://localhost:3000/
+
 ```sh
-
-```
-
-#### Frontend Only
-```sh
-# Build & start
-cd packages/frontend 
-npm install
-npm run dev
-
-# Docker with Hot Reload
-docker build -t todo-frontend .
-npm run frontend-docker 
-
+   docker compose up --build    
 ```
 
 ___
