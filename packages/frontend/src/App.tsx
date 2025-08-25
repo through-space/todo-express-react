@@ -1,8 +1,8 @@
 import "./App.css";
+import { ToDoAppPage } from "./pages/ToDoAppPage/ToDoAppPage";
 
-const num = 1 + 4;
 function App() {
-	return <div className="App">{num}</div>;
+	return <ToDoAppPage />;
 }
 
 export default App;
