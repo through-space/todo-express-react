@@ -1,0 +1,12 @@
+# Ignore artifacts:
+build
+coverage
+
+
+{
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "singleQuote": false,
+  "printWidth": 100,
+  "useTabs": true,
+  "tabWidth": 4
+}
