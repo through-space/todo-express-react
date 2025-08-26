@@ -1,38 +1,15 @@
-import { Request, Response } from "express";
-import { IRegisterUser } from "./types.js";
+import type { Request, Response } from "express";
+import { taskRepository } from "@repositories/task/taskRepository";
 
-// const JWT_SECRET = process.env.JWT_SECRET || "supersecret"; // Use env var in production
-// const TOKEN_EXPIRY = "1h";
-
-//TODO: fix IRegisterUser multiple definitions
-export const getAllTasks = async (req: Request<{}, {}, IRegisterUser>, res: Response) => {
-	const { username, password } = req.body;
-
-	if (!username || !password) {
-		res.status(400).json({ message: "Missing username or password" });
-		return;
-	}
-
-	// authService
-	// 	.register({ username, password })
-	// 	.then((user) => {
-	// 		if (!user) {
-	// 			const err = new Error("Unable to create user.");
-	// 			res.status(500).json({ message: "Server error", error: err });
-	// 			return;
-	// 		}
-	//
-	// 		res.status(201).json({
-	// 			message: "User registered",
-	// 			user: { username: user.username, id: user.id },
-	// 		});
-	// 	})
-	// 	.catch((err: IAuthError) => {
-	// 		if (err.type === "user_exists") {
-	// 			res.status(400).json({ message: "User already exists" });
-	// 			return;
-	// 		}
-	// 	});
+export const getAllTasks = async (req: Request, res: Response) => {
+	taskRepository
+		.getTasks()
+		.then((tasks) => {
+			res.status(200).json(tasks);
+		})
+		.catch((err) => {
+			res.status(500).json({ message: "Server error", error: err });
+		});
 };
 
 // export const register = async (req: Request<{}, {}, IRegisterUser>, res: Response) => {

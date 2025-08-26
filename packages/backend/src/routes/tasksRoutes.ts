@@ -1,10 +1,14 @@
 import { Router } from "express";
+import { taskController } from "@controllers/taskController/taskController";
 
 export const tasksRouter = Router();
 
 tasksRouter.get("/", (req, res, next) => {
-	res.send("taskRouter response4");
-	next();
+	// console.log("tasksRouter");
+	// res.send("tasksRouter response");
+	// return;
+	taskController.getAllTasks(req, res);
+	// next();
 });
 
 // authRouter.get("/", (req, res, next) => {

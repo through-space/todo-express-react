@@ -91,4 +91,6 @@ ___
   - [ ] Router
     - [x] init
   - [ ] Tasks Controller && Repo
+  - [ ] CRUD
   - [ ] Error Handling
+- [ ] Describe API endpoints
