@@ -17,3 +17,12 @@ export enum ETaskRepositoryError {
 export enum EPrismaError {
 	RECORD_NOT_FOUND = "P2025",
 }
+
+export class TaskRepositoryError extends Error {
+	cause: ETaskRepositoryError;
+	constructor(message: string, cause: ETaskRepositoryError) {
+		super(message);
+		this.name = "TaskValidationError";
+		this.cause = cause;
+	}
+}

@@ -1,6 +1,6 @@
 import { Prisma, type Task, ETaskStatus } from "@prisma/client";
 import { prisma } from "../../index";
-import { EPrismaError, ETaskRepositoryError } from "@repositories/task/types";
+import { EPrismaError, ETaskRepositoryError, TaskRepositoryError } from "@repositories/task/types";
 
 // getTasks: () => Task[];
 // getTaskByID: (id: Task["id"]) => Task | null;
@@ -74,18 +74,19 @@ export const updateTask = async (id: Task["id"], task: Prisma.TaskUpdateInput): 
 
 export const updateTaskStatus = async (id: Task["id"], status: Task["status"]): Promise<Task> => {
 	if (!id) {
-		throw new Error("Task id is required", {
-			cause: ETaskRepositoryError.TASK_VALIDATION_ERROR,
-		});
+		throw new TaskRepositoryError(
+			"Task id is required",
+			ETaskRepositoryError.TASK_VALIDATION_ERROR,
+		);
 	}
 
 	const allowedStatuses = new Set<ETaskStatus>(Object.values(ETaskStatus));
 
 	if (!allowedStatuses.has(status)) {
-		console.log("here");
-		throw new Error("Task Status not allowed", {
-			cause: ETaskRepositoryError.TASK_VALIDATION_ERROR,
-		});
+		throw new TaskRepositoryError(
+			"Task Status not allowed",
+			ETaskRepositoryError.TASK_VALIDATION_ERROR,
+		);
 	}
 
 	return prisma.task
@@ -94,8 +95,10 @@ export const updateTaskStatus = async (id: Task["id"], status: Task["status"]): 
 		.catch((err) => {
 			if (err instanceof Prisma.PrismaClientKnownRequestError) {
 				if (err.code === EPrismaError.RECORD_NOT_FOUND) {
-					err.cause = ETaskRepositoryError.TASK_NOT_FOUND;
-					throw err;
+					throw new TaskRepositoryError(
+						"Task not found",
+						ETaskRepositoryError.TASK_NOT_FOUND,
+					);
 				}
 			}
 
@@ -105,9 +108,10 @@ export const updateTaskStatus = async (id: Task["id"], status: Task["status"]): 
 
 export const deleteTask = async (id: Task["id"]): Promise<Task> => {
 	if (!id) {
-		throw new Error("Task id is required", {
-			cause: ETaskRepositoryError.TASK_VALIDATION_ERROR,
-		});
+		throw new TaskRepositoryError(
+			"Task id is required",
+			ETaskRepositoryError.TASK_VALIDATION_ERROR,
+		);
 	}
 
 	return prisma.task
@@ -116,8 +120,10 @@ export const deleteTask = async (id: Task["id"]): Promise<Task> => {
 		.catch((err) => {
 			if (err instanceof Prisma.PrismaClientKnownRequestError) {
 				if (err.code === EPrismaError.RECORD_NOT_FOUND) {
-					err.cause = ETaskRepositoryError.TASK_NOT_FOUND;
-					throw err;
+					throw new TaskRepositoryError(
+						"Task not found",
+						ETaskRepositoryError.TASK_NOT_FOUND,
+					);
 				}
 			}
 

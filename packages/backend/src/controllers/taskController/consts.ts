@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import { taskRepository } from "@repositories/task/taskRepository";
-import { Prisma, type Task } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { ETaskRepositoryError } from "@repositories/task/types";
 
 const validateTask = (task: Prisma.TaskCreateInput): Prisma.TaskCreateInput => {
@@ -86,13 +86,9 @@ export const updateTask = (req: Request, res: Response, next: NextFunction): voi
 	taskRepository
 		.updateTask(id, task)
 		.then((task) => {
-			console.log("in updateTask:success");
 			res.status(200).json(task);
 		})
 		.catch((err) => {
-			console.log("in updateTask:reject");
-			// console.log(err.cause);
-			console.table(err);
 			switch (err?.cause) {
 				case ETaskRepositoryError.TASK_NOT_FOUND:
 					res.status(404).json({ error: "Task not found" });
@@ -105,7 +101,6 @@ export const updateTask = (req: Request, res: Response, next: NextFunction): voi
 			}
 		})
 		.finally(() => {
-			console.log("in updateTask:finally");
 			next();
 		});
 };
