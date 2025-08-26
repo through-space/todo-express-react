@@ -3,24 +3,12 @@ import { taskController } from "@controllers/taskController/taskController";
 
 export const tasksRouter = Router();
 
-tasksRouter.get("/", (req, res, next) => {
-	// console.log("tasksRouter");
-	// res.send("tasksRouter response");
-	// return;
-	taskController.getAllTasks(req, res);
-	// next();
-});
+tasksRouter.get("/", taskController.getAllTasks);
+tasksRouter.get("/:id", taskController.getTaskByID);
 
-// authRouter.get("/", (req, res, next) => {
-// 	console.log("authRouter");
-// 	res.send("authRouter response");
-// 	next();
-// });
-// authRouter.post("/register", register);
-// taskRouter.post("/register", (req, res, next) => {
-// 	authController.register(req, res);
+tasksRouter.post("/", taskController.createTask);
 
-// res.send("register response");
-// next();
-// });
-// router.post("/login", login);
+tasksRouter.put("/:id", taskController.updateTask);
+tasksRouter.patch("/:id", taskController.updateTaskStatus);
+
+tasksRouter.delete("/:id", taskController.deleteTask);

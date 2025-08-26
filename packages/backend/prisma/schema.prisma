@@ -8,15 +8,15 @@ datasource db {
 }
 
 model Task {
-  id          String   @id @default(uuid())
-  title       String   @db.VarChar(255)
+  id          String      @id @default(uuid())
+  title       String      @db.VarChar(255)
   description String?
-  status      Status   @default(OPEN)
-  created_at  DateTime @default(now())
+  status      ETaskStatus @default(OPEN)
+  created_at  DateTime    @default(now())
   updated_at  DateTime
 }
 
-enum Status {
+enum ETaskStatus {
   OPEN
   IN_PROGRESS
   DONE

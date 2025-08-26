@@ -2,69 +2,83 @@
 ___
 This is a basic ToDo Single Page App.
 The app is a monorepo containing Frontend and Backend.
-#### Frontend:
-- TypeScript
-- Vite
-- React
-- Tailwind CSS
-#### Backend
-- TypeScript
-- Express
-- Prisma + Postgres
+
+*Currently, only a dev build running in Docker is available.*
 ___
 
 ## Table of Contents
 
 - [Features](#features)
-- [Get Started](#get-started)
+- [Get Started](#getting-started)
+- [Tech Stack](#tech-stack)
 - [ToDo](#todo)
 
 ___
 
 ## Features
-
-- Frontend
-- Backend
+  - Tasks List
+  - Task Creation
+  - Task Update
 
 ___
+
 
 ## Getting Started
 
 ### Development
+
+Use these instructions to Develop and Run the project locally
 
 #### Requirements
 - [Node.js](https://nodejs.org/en/download) >= 22.12.0
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 
 #### Installation
-```sh
-### BE+FE Packages
-npm run install
-```
 
-##### Copy .env file
+##### .env
+Copy and alter .env file `🚩 REQUIERED_FOR_RUNNING`
+
 ```sh
   cp .env.example .env
+
 ```
-- Alter .env vars
-
-
-#### Run in Docker
-For local FS Development with Hot Reload
->FrontEnd:  http://localhost:5173/
->BackendEnd:  http://localhost:3000/
-
+*Next step is necessary only for local development*
 ```sh
-## Initialize DB. Run Once 
-  docker compose run backend npx prisma migrate dev --name init
-  
+  ### BE+FE Development Packages
+  npm run install
 ```
 
+#### 🚩 Running in Docker
+
+For local FS Development with Hot Reload.
+
+| |                                                  |
+|---|--------------------------------------------------|
+| FrontEnd | [http://localhost:5173/](http://localhost:5173/) |
+| BackEnd   | [http://localhost:3000/](http://localhost:3000/) |
+
+
 ```sh
+
   
-## Run Docker-Compose
+  ## Run BE & FE in in Docker
   docker compose up --build
+
+  ## Initialize DB by running dockerized BE 
+  ## ❗️Run Once
+  docker compose run --rm backend npx prisma migrate dev --name init
+  ## Further Migrations
+  docker compose run backend npx prisma migrate dev --build  --name status
 ```
+
+___
+## Tech Stack
+
+|          |                                                      |
+|----------|------------------------------------------------------|
+| FrontEnd | `Node.js` `TypeScript` `Vite` `React`                |
+| Backend  | `Node.js` `TypeScript` `Express` `Prisma` `Postgres` |
+| Platform | `Docker`                                             |
 
 ___
 
@@ -92,5 +106,8 @@ ___
     - [x] init
   - [ ] Tasks Controller && Repo
   - [ ] CRUD
+    - [ ] updated-at
   - [ ] Error Handling
+- [ ] Remove ToDos
+- [ ] Remove console.log
 - [ ] Describe API endpoints
