@@ -11,8 +11,27 @@ import { networkConfig } from "@config/network";
 const BE_URL = networkConfig.BACKEND_URL;
 const API_URL = `${BE_URL}/api/tasks`;
 
+const handleError = (err: any) => {
+	console.log("err", err);
+};
+
+const fetchJson = async (url: string, options: RequestInit) => {
+	const res = await fetch(url, options);
+
+	let body: any = null;
+	try {
+		body = await res.json();
+	} catch {}
+
+	if (!res.ok) {
+		throw new Error(`Network Error: ${body?.error}`);
+	}
+
+	return body;
+};
+
 export const getTasks = async (): Promise<ITask[]> => {
-	return fetch(`${API_URL}/`)
-		.then((res) => res.json())
-		.then((tasks) => tasks);
+	return fetchJson(API_URL, {})
+		.then((tasks) => tasks)
+		.catch(handleError);
 };
