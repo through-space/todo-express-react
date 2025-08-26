@@ -1,11 +1,6 @@
-import { networkConfig } from "@config/network";
+import { taskService } from "@services/task-service/taskService";
 
 export const useTaskService = () => {
-	const tasks = [1, 2];
-
-	const beUrl = networkConfig.BACKEND_URL;
-
-	console.log("beUrl", beUrl);
+	const tasks = taskService.getTasks().then((tasks) => console.log(tasks));
 	return { tasks };
-	// // const allTasks = taskService.getTasks().then((tasks) => console.log(tasks));
 };
