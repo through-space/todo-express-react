@@ -24,7 +24,7 @@
     },
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "module": "node16",
+    "module": "ESNext",
     "moduleResolution": "bundler"
   },
   "include": [

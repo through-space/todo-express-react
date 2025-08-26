@@ -61,14 +61,14 @@ For local FS Development with Hot Reload.
 ```sh
 
   
-  ## Run BE & FE in in Docker
+  ## Run & Rebuild in Docker
   docker compose up --build
 
   ## Initialize DB by running dockerized BE 
   ## ❗️Run Once
   docker compose run --rm backend npx prisma migrate dev --name init
   ## Further Migrations
-  docker compose run backend npx prisma migrate dev --build  --name status
+  docker compose run backend npx prisma migrate dev --build --name <migration-name>
 ```
 
 ___
@@ -85,14 +85,14 @@ ___
 ## ToDo
 - [ ] Initialize
     - [x] Git
-    - [ ] Docker
+    - [x] Docker
       - [x] compose
       - [x] Run FE
       - [x] Run BE
       - [x] Run DB
 - [ ] Frontend
   - [x] Vite
-  - [ ] ts 
+  - [x] ts 
     - [x] ts aliasing
   - [x] prettier 
   - [ ] Design
@@ -102,11 +102,11 @@ ___
   - [x] ts
   - [x] prettier
   - [x] Prisma + Postgres
-  - [ ] Router
+  - [x] Router
     - [x] init
-  - [ ] Tasks Controller && Repo
-  - [ ] CRUD
-    - [ ] updated-at
+  - [x] Tasks Controller && Repo
+  - [x] CRUD
+    - [x] updated-at
   - [ ] Error Handling
 - [ ] Remove ToDos
 - [ ] Remove console.log
