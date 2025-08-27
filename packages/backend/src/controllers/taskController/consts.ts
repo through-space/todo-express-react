@@ -164,7 +164,12 @@ export const deleteTask = (req: Request, res: Response, next: NextFunction): voi
 
 export const getStats = (req: Request, res: Response, next: NextFunction): void => {
 	const status = req.query.status as ETaskStatus | undefined;
-	taskRepository.getStats({ status }).then((stats) => {
-		res.status(200).json({ stats });
-	});
+	taskRepository
+		.getStats({ status })
+		.then((stats) => {
+			res.status(200).json({ stats });
+		})
+		.catch((err) => {
+			res.status(500).json({ error: err });
+		});
 };
