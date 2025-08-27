@@ -4,11 +4,11 @@ import { TaskForm } from "@features/task-form/components/TaskForm";
 import { useTasks } from "@hooks/useTasks";
 
 export const ToDoAppPage: FC = () => {
-	const { saveTask } = useTasks();
+	const { saveTask, deleteTask } = useTasks();
 
 	return (
 		<>
-			<TaskList />
+			<TaskList onTaskDelete={deleteTask} onTaskEdit={() => {}} />
 			<TaskForm saveTask={saveTask} />
 		</>
 	);

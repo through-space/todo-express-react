@@ -23,6 +23,13 @@ export const useTaskStore = create<ITaskStore>()((set) => {
 				};
 			});
 		},
+		deleteTask: (id: ITask["id"]) => {
+			set((state) => {
+				return {
+					tasks: state.tasks.filter((task) => task.id !== id),
+				};
+			});
+		},
 		editedTask: null,
 		setEditedTask: (task: ITask | null) => set({ editedTask: task }),
 	};

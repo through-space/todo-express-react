@@ -1,10 +1,9 @@
-import { FC } from "react";
-import { ITask } from "@services/task-service/types";
+import { FC, useState } from "react";
 import { ITaskProps } from "@features/task-list/components/Task/types";
 import { TaskWrapper } from "@features/task-list/components/Task/TaskStyledComponents";
 
 export const Task: FC<ITaskProps> = (props) => {
-	const { task } = props;
+	const { task, onDelete, onEdit } = props;
 
 	const formattedDate = task.created_at
 		? new Date(task.created_at).toLocaleString()
@@ -16,6 +15,8 @@ export const Task: FC<ITaskProps> = (props) => {
 			<div>{task.description}</div>
 			<div>{task.status}</div>
 			<div>{formattedDate}</div>
+			<button onClick={() => onEdit(task.id)}>Edit</button>
+			<button onClick={() => onDelete(task.id)}>Delete</button>
 		</TaskWrapper>
 	);
 };

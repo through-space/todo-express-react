@@ -32,3 +32,30 @@ export const handleTaskSave = (
 			});
 	}
 };
+
+export const handleTaskDelete = (
+	taskID: ITask["id"],
+	options: {
+		onPreDelete?: (taskID: ITask["id"]) => void;
+		onDeleteSuccess?: (taskID: ITask["id"]) => void;
+		onDeleteError?: (err: any) => void;
+	},
+): void => {
+	const { onPreDelete, onDeleteError, onDeleteSuccess } = options;
+
+	if (!taskID) {
+		throw new Error("Task id is required");
+	}
+
+	if (onPreDelete) {
+		onPreDelete(taskID);
+	}
+
+	taskService
+		.deleteTask(taskID)
+		.then((task) => onDeleteSuccess && onDeleteSuccess(taskID))
+		.catch((err) => {
+			console.log(err);
+			onDeleteError && onDeleteError(err);
+		});
+};
