@@ -3,10 +3,13 @@ import {
 	FormFieldsWrapper,
 	FormFieldWrapper,
 	FormWrapper,
-} from "@features/task-form/components/styled";
+} from "@features/task-form/components/TaskForm/styled";
 import { useTaskStore } from "@stores/task-store/taskStore";
-import { ITaskFormProps } from "@features/task-form/components/types";
+import { ITaskFormProps } from "@features/task-form/components/TaskForm/types";
 import { FC } from "react";
+import { SelectInput } from "@ui-components/atoms/select-input/SelectInput";
+import { statusOptions } from "@features/task-form/components/TaskForm/consts";
+import { ETaskStatus } from "@services/task-service/types";
 
 export const TaskForm: FC<ITaskFormProps> = ({ saveTask }) => {
 	const { editedTask, setEditedTask } = useTaskStore();
@@ -20,6 +23,10 @@ export const TaskForm: FC<ITaskFormProps> = ({ saveTask }) => {
 
 	const handleTitleChange = (title: string) => {
 		setEditedTask({ ...editedTask, title });
+	};
+
+	const handleStatusChange = (status: ETaskStatus) => {
+		setEditedTask({ ...editedTask, status });
 	};
 
 	const handleDescriptionChange = (description: string) => {
@@ -44,6 +51,14 @@ export const TaskForm: FC<ITaskFormProps> = ({ saveTask }) => {
 							placeholder="Task description"
 							value={editedTask?.description || ""}
 							onChange={handleDescriptionChange}
+						/>
+					</FormFieldWrapper>
+					<FormFieldWrapper>
+						<SelectInput
+							id="status"
+							value={editedTask?.status}
+							options={statusOptions}
+							onChange={handleStatusChange}
 						/>
 					</FormFieldWrapper>
 					<button type={"button"} onClick={handleSubmit}>

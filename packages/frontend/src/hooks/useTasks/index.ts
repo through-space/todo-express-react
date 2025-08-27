@@ -7,6 +7,7 @@ import {
 	handleTaskDelete,
 	handleTaskCreate,
 	handleTaskUpdate,
+	handleTaskStatusUpdate,
 } from "@hooks/useTasks/consts";
 import { deleteTask } from "@services/task-service/consts";
 
@@ -26,8 +27,8 @@ export const useTasks = (): IUseTasks => {
 		});
 	}, []);
 
-	const onSaveSuccess = (taskID: ITask["id"], task: ITask) => {
-		updateTask(taskID, { ...task, isPending: false });
+	const onSaveSuccess = (TaskId: ITask["id"], task: ITask) => {
+		updateTask(TaskId, { ...task, isPending: false });
 		setEditedTask(null);
 	};
 
@@ -39,12 +40,12 @@ export const useTasks = (): IUseTasks => {
 		updateTask(task.id, { isPending: true });
 	};
 
-	const onPreDelete = (taskID: ITask["id"]) => {
-		updateTask(taskID, { isPending: true });
+	const onPreDelete = (TaskId: ITask["id"]) => {
+		updateTask(TaskId, { isPending: true });
 	};
 
-	const onDeleteSuccess = (taskID: ITask["id"]) => {
-		deleteTask(taskID);
+	const onDeleteSuccess = (TaskId: ITask["id"]) => {
+		deleteTask(TaskId);
 	};
 
 	const onEditTask = (id: ITask["id"]) => {
@@ -68,5 +69,8 @@ export const useTasks = (): IUseTasks => {
 		deleteTask: (id: string) =>
 			handleTaskDelete(id, { onPreDelete, onDeleteSuccess }),
 		editTask: onEditTask,
+		updateTaskStatus: (id: ITask["id"], status: ITask["status"]) => {
+			handleTaskStatusUpdate(id, status, {});
+		},
 	};
 };

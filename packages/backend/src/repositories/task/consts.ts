@@ -1,6 +1,7 @@
 import { Prisma, type Task, ETaskStatus } from "@prisma/client";
 import { prisma } from "../../index";
 import { EPrismaError, ETaskRepositoryError, TaskRepositoryError } from "@repositories/task/types";
+import * as console from "node:console";
 
 // getTasks: () => Task[];
 // getTaskByID: (id: Task["id"]) => Task | null;
@@ -58,19 +59,27 @@ export const updateTask = async (id: Task["id"], task: Prisma.TaskUpdateInput): 
 
 	task.updated_at = new Date();
 	const sanitizedTask = getSanitizedTask<Prisma.TaskUpdateInput>(task);
-
+	console.log(typeof sanitizedTask.status, sanitizedTask.status);
 	return prisma.task
 		.update({ data: sanitizedTask, where: { id } })
 		.then((task) => task)
 		.catch((err) => {
 			if (err instanceof Prisma.PrismaClientKnownRequestError) {
-				if (err.code === EPrismaError.RECORD_NOT_FOUND) {
-					err.cause = ETaskRepositoryError.TASK_NOT_FOUND;
-					throw err;
+				switch (err.code) {
+					case EPrismaError.RECORD_NOT_FOUND:
+						throw new TaskRepositoryError(
+							"Task not found",
+							ETaskRepositoryError.TASK_NOT_FOUND,
+						);
+					default:
+						throw err;
 				}
+			} else {
+				throw err;
 			}
 
-			throw err;
+			// console.log("throwing in error");
+			// throw err;
 		});
 };
 

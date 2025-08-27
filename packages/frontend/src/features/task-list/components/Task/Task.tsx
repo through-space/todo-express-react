@@ -1,19 +1,33 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { ITaskProps } from "@features/task-list/components/Task/types";
-import { TaskWrapper } from "@features/task-list/components/Task/TaskStyledComponents";
+import { TaskWrapper } from "@features/task-list/components/Task/styled";
+import { statusSelectionOptions } from "@features/task-list/components/Task/consts";
+import { SelectInput } from "@ui-components/atoms/select-input/SelectInput";
+import { ETaskStatus } from "@services/task-service/types";
 
 export const Task: FC<ITaskProps> = (props) => {
-	const { task, onDelete, onEdit } = props;
+	const { task, onDelete, onEdit, onStatusChange } = props;
 
 	const formattedDate = task.created_at
 		? new Date(task.created_at).toLocaleString()
 		: null;
 
+	const handleStatusChange = (status: ETaskStatus) => {
+		onStatusChange(task.id, status);
+	};
+
 	return (
 		<TaskWrapper isPending={!!task?.isPending}>
 			<div>{task.title}</div>
 			<div>{task.description}</div>
-			<div>{task.status}</div>
+			<div>
+				<SelectInput
+					id={`status-selection-${task.id}`}
+					value={task.status}
+					options={statusSelectionOptions}
+					onChange={handleStatusChange}
+				/>
+			</div>
 			<div>{formattedDate}</div>
 			<button onClick={() => onEdit(task.id)}>Edit</button>
 			<button onClick={() => onDelete(task.id)}>Delete</button>

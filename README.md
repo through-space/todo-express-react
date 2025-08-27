@@ -10,6 +10,7 @@ ___
 
 - [Features](#features)
 - [Get Started](#getting-started)
+- [API Endpoints](#api-endpoints)
 - [Tech Stack](#tech-stack)
 - [ToDo](#todo)
 
@@ -59,11 +60,13 @@ For local FS Development with Hot Reload.
 
 
 ```sh
-
-  
   ## Run & Rebuild in Docker
   docker compose up --build
+```
 
+Prisma Initialization & Migration
+
+```sh
   ## Initialize DB by running dockerized BE 
   ## ❗️Run Once
   docker compose run --rm backend npx prisma migrate dev --name init
@@ -72,6 +75,19 @@ For local FS Development with Hot Reload.
 ```
 
 ___
+## API Endpoints
+
+| Method | Endpoint          | Description                                 | Success Code | Error Codes           |
+| ------ | ----------------- | ------------------------------------------- | ------------ | --------------------- |
+| GET    | `/api/tasks`      | Returns list of all tasks                   | 200          | —                     |
+| GET    | `/api/tasks/{id}` | Returns a single task by id                 | 200          | 404 (not found)       |
+| POST   | `/api/tasks`      | Creates a new task, returns Location header | 201          | —                     |
+| PUT    | `/api/tasks/{id}` | Updates **all fields** of a task            | 200          | 400 (validation), 404 |
+| PATCH  | `/api/tasks/{id}` | Updates only the **status** field           | 200          | 400 (validation), 404 |
+| DELETE | `/api/tasks/{id}` | Deletes a task                              | 204          | 404 (not found)       |
+
+___
+
 ## Tech Stack
 
 |          |                                                      |
@@ -95,14 +111,17 @@ ___
   - [x] ts 
     - [x] ts aliasing
   - [x] prettier 
-  - [ ] Task List
-  - [ ] Task Form
-    - [ ] Form Basic Functionality
+  - [x] Task List
+  - [x] Task Form
+    - [x] Form Basic Functionality
     - [ ] Show validation errors
-  - [ ] Design
-      - [ ] add tailwind
+  - [x] Design
+      - [x] add tailwind
   - [ ] Error Handling
+  - [ ] Save Button Disable
 - [ ] Backend
+  - [ ] Restrict update fields / check updated_at
+  - [ ] CRUD breakdown to files
   - [x] ts
   - [x] prettier
   - [x] Prisma + Postgres
@@ -115,3 +134,5 @@ ___
 - [ ] Remove ToDos
 - [ ] Remove console.log
 - [ ] Describe API endpoints
+- [ ] Add github repo + readme instructions
+- [ ] Tests

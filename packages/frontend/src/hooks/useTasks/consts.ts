@@ -1,12 +1,13 @@
 import { ITask } from "@services/task-service/types";
 import { taskService } from "@services/task-service/taskService";
 import { v4 as uuidv4 } from "uuid";
+import { useTaskStore } from "@stores/task-store/taskStore";
 
 export const handleTaskCreate = (
 	task: Partial<ITask>,
 	options: {
 		onPreSave?: (task: Partial<ITask>) => void;
-		onSaveSuccess?: (taskID: ITask["id"], task: ITask) => void;
+		onSaveSuccess?: (TaskId: ITask["id"], task: ITask) => void;
 		onSaveError?: (err: any) => void;
 	},
 ): void => {
@@ -34,7 +35,7 @@ export const handleTaskUpdate = (
 	task: Partial<ITask>,
 	options: {
 		onPreSave?: (task: Partial<ITask>) => void;
-		onSaveSuccess?: (taskID: ITask["id"], task: ITask) => void;
+		onSaveSuccess?: (TaskId: ITask["id"], task: ITask) => void;
 		onSaveError?: (err: any) => void;
 	},
 ): void => {
@@ -54,27 +55,49 @@ export const handleTaskUpdate = (
 };
 
 export const handleTaskDelete = (
-	taskID: ITask["id"],
+	TaskId: ITask["id"],
 	options: {
-		onPreDelete?: (taskID: ITask["id"]) => void;
-		onDeleteSuccess?: (taskID: ITask["id"]) => void;
+		onPreDelete?: (TaskId: ITask["id"]) => void;
+		onDeleteSuccess?: (TaskId: ITask["id"]) => void;
 		onDeleteError?: (err: any) => void;
 	},
 ): void => {
 	const { onPreDelete, onDeleteError, onDeleteSuccess } = options;
 
-	if (!taskID) {
+	if (!TaskId) {
 		throw new Error("Task id is required");
 	}
 
 	if (onPreDelete) {
-		onPreDelete(taskID);
+		onPreDelete(TaskId);
 	}
 
 	taskService
-		.deleteTask(taskID)
-		.then(() => onDeleteSuccess && onDeleteSuccess(taskID))
+		.deleteTask(TaskId)
+		.then(() => onDeleteSuccess && onDeleteSuccess(TaskId))
 		.catch((err) => {
 			onDeleteError && onDeleteError(err);
 		});
+};
+
+export const handleTaskStatusUpdate = (
+	id: ITask["id"],
+	status: ITask["status"],
+	options: {
+		onPreUpdate?: (TaskId: ITask["id"], status: ITask["status"]) => void;
+		onUpdateSuccess?: (TaskId: ITask["id"], task: ITask) => void;
+		onUpdateError?: (err: any) => void;
+	},
+): void => {
+	const { onPreUpdate, onUpdateSuccess, onUpdateError } = options;
+	if (!id) {
+		throw new Error("Task id is required");
+	}
+
+	onPreUpdate(id, status);
+
+	taskService
+		.updateTaskStatus(id, status)
+		.then((task) => {})
+		.catch((err) => {});
 };

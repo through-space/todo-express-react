@@ -6,10 +6,16 @@ import { ITaskListProps } from "@features/task-list/components/TaskList/types";
 import { DeleteConfirmation } from "@features/task-list/components/DeleteConfirmation/DeleteConfirmation";
 import { ITask } from "@services/task-service/types";
 
-export const TaskList: FC<ITaskListProps> = ({ onTaskDelete, onTaskEdit }) => {
+export const TaskList: FC<ITaskListProps> = ({
+	onTaskDelete,
+	onTaskEdit,
+	onStatusUpdate,
+}) => {
 	const { tasks } = useTaskStore();
+
 	const [isDeleteDialogOpen, setIsDeleteDialogOpen] =
 		useState<boolean>(false);
+
 	const [deleteID, setDeleteID] = useState<ITask["id"]>(null);
 
 	const openDeleteDialog = (id: ITask["id"]) => {
@@ -33,6 +39,7 @@ export const TaskList: FC<ITaskListProps> = ({ onTaskDelete, onTaskEdit }) => {
 			task={task}
 			onEdit={onTaskEdit}
 			onDelete={openDeleteDialog}
+			onStatusChange={onStatusUpdate}
 		/>
 	));
 

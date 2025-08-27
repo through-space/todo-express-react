@@ -1,7 +1,7 @@
 export enum ETaskStatus {
-	OPEN,
-	IN_PROGRESS,
-	DONE,
+	OPEN = "OPEN",
+	IN_PROGRESS = "IN_PROGRESS",
+	DONE = "DONE",
 }
 
 export interface ITask {

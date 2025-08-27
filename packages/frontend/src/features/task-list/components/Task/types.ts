@@ -4,4 +4,5 @@ export interface ITaskProps {
 	task: ITask;
 	onDelete: (id: ITask["id"]) => void;
 	onEdit: (id: ITask["id"]) => void;
+	onStatusChange: (id: ITask["id"], status: ITask["status"]) => void;
 }

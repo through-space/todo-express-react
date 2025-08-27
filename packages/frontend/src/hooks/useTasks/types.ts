@@ -1,7 +1,8 @@
-import { ITask } from "@services/task-service/types";
+import { ETaskStatus, ITask } from "@services/task-service/types";
 
 export interface IUseTasks {
 	saveTask: (task: Partial<ITask>) => void;
 	deleteTask: (id: ITask["id"]) => void;
 	editTask: (id: ITask["id"]) => void;
+	updateTaskStatus: (id: ITask["id"], status: ETaskStatus) => void;
 }
