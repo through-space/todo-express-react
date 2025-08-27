@@ -90,6 +90,7 @@ ___
 | PATCH  | `/api/tasks/{id}` | Updates only the **status** field           | 200          | 400 (validation), 404 |
 | DELETE | `/api/tasks/{id}` | Deletes a task                              | 204          | 404 (not found)       |
 
+Check out [Postman Collection](to-do-app.postman_collection.json)
 ___
 
 ## Tech Stack
