@@ -2,17 +2,11 @@ import { ITaskStore } from "@stores/task-store/types";
 import { ITask } from "@services/task-service/types";
 
 export const createStoreHandlers = (store: ITaskStore) => {
-	const {
-		getTaskById,
-		setEditedTask,
-		setTasks,
-		addTask,
-		updateTask,
-		deleteTask,
-	} = store;
+	const { getTaskById, setEditedTask, addTask, updateTask, deleteTask } =
+		store;
 
-	const onSaveSuccess = (TaskId: ITask["id"], task: ITask) => {
-		updateTask(TaskId, { ...task, isPending: false });
+	const onSaveSuccess = (id: ITask["id"], task: ITask) => {
+		updateTask(id, { ...task, isPending: false });
 		setEditedTask(null);
 	};
 
@@ -24,17 +18,25 @@ export const createStoreHandlers = (store: ITaskStore) => {
 		updateTask(task.id, { isPending: true });
 	};
 
-	const onPreDelete = (TaskId: ITask["id"]) => {
-		updateTask(TaskId, { isPending: true });
+	const onPreDelete = (id: ITask["id"]) => {
+		updateTask(id, { isPending: true });
 	};
 
-	const onDeleteSuccess = (TaskId: ITask["id"]) => {
-		deleteTask(TaskId);
+	const onDeleteSuccess = (id: ITask["id"]) => {
+		deleteTask(id);
 	};
 
 	const onEditTask = (id: ITask["id"]) => {
 		const task = getTaskById(id);
 		setEditedTask(task);
+	};
+
+	const onPreStatusUpdate = (id: ITask["id"], status: ITask["status"]) => {
+		updateTask(id, { isPending: true });
+	};
+
+	const onStatusUpdateSuccess = (id: ITask["id"], task: ITask) => {
+		updateTask(id, { ...task, isPending: false });
 	};
 
 	return {
@@ -44,5 +46,7 @@ export const createStoreHandlers = (store: ITaskStore) => {
 		onPreDelete,
 		onDeleteSuccess,
 		onEditTask,
+		onPreStatusUpdate,
+		onStatusUpdateSuccess,
 	};
 };

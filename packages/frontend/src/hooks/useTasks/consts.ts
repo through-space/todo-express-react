@@ -7,7 +7,7 @@ export const handleTaskCreate = (
 	task: Partial<ITask>,
 	options: {
 		onPreSave?: (task: Partial<ITask>) => void;
-		onSaveSuccess?: (TaskId: ITask["id"], task: ITask) => void;
+		onSaveSuccess?: (id: ITask["id"], task: ITask) => void;
 		onSaveError?: (err: any) => void;
 	},
 ): void => {
@@ -35,7 +35,7 @@ export const handleTaskUpdate = (
 	task: Partial<ITask>,
 	options: {
 		onPreSave?: (task: Partial<ITask>) => void;
-		onSaveSuccess?: (TaskId: ITask["id"], task: ITask) => void;
+		onSaveSuccess?: (id: ITask["id"], task: ITask) => void;
 		onSaveError?: (err: any) => void;
 	},
 ): void => {
@@ -55,26 +55,26 @@ export const handleTaskUpdate = (
 };
 
 export const handleTaskDelete = (
-	TaskId: ITask["id"],
+	id: ITask["id"],
 	options: {
-		onPreDelete?: (TaskId: ITask["id"]) => void;
-		onDeleteSuccess?: (TaskId: ITask["id"]) => void;
+		onPreDelete?: (id: ITask["id"]) => void;
+		onDeleteSuccess?: (id: ITask["id"]) => void;
 		onDeleteError?: (err: any) => void;
 	},
 ): void => {
 	const { onPreDelete, onDeleteError, onDeleteSuccess } = options;
 
-	if (!TaskId) {
+	if (!id) {
 		throw new Error("Task id is required");
 	}
 
 	if (onPreDelete) {
-		onPreDelete(TaskId);
+		onPreDelete(id);
 	}
 
 	taskService
-		.deleteTask(TaskId)
-		.then(() => onDeleteSuccess && onDeleteSuccess(TaskId))
+		.deleteTask(id)
+		.then(() => onDeleteSuccess && onDeleteSuccess(id))
 		.catch((err) => {
 			onDeleteError && onDeleteError(err);
 		});
@@ -84,8 +84,8 @@ export const handleTaskStatusUpdate = (
 	id: ITask["id"],
 	status: ITask["status"],
 	options: {
-		onPreUpdate?: (TaskId: ITask["id"], status: ITask["status"]) => void;
-		onUpdateSuccess?: (TaskId: ITask["id"], task: ITask) => void;
+		onPreUpdate?: (id: ITask["id"], status: ITask["status"]) => void;
+		onUpdateSuccess?: (id: ITask["id"], task: ITask) => void;
 		onUpdateError?: (err: any) => void;
 	},
 ): void => {
@@ -94,10 +94,14 @@ export const handleTaskStatusUpdate = (
 		throw new Error("Task id is required");
 	}
 
-	onPreUpdate(id, status);
+	onPreUpdate && onPreUpdate(id, status);
 
 	taskService
 		.updateTaskStatus(id, status)
-		.then((task) => {})
-		.catch((err) => {});
+		.then((task) => {
+			onUpdateSuccess && onUpdateSuccess(id, task);
+		})
+		.catch((err) => {
+			onUpdateError && onUpdateError(err);
+		});
 };

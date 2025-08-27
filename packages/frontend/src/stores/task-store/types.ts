@@ -7,7 +7,6 @@ export interface ITaskStore {
 	addTask: (task: ITask) => void;
 	updateTask: (id: ITask["id"], task: Partial<ITask>) => void;
 	deleteTask: (id: ITask["id"]) => void;
-	// updateTaskStatus: (TaskId: ITask["id"], status: ITask["status"]) => void;
 	editedTask: ITask | null;
 	setEditedTask: (task: ITask | null) => void;
 }

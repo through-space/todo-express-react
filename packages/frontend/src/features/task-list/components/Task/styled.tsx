@@ -7,7 +7,7 @@ export const TaskWrapper: FC<{ children?: ReactNode; isPending: boolean }> = ({
 	return (
 		<div
 			className={
-				"flex flex-row justify-end p-2 border rounded-sm gap-5 border-emerald-100 " +
+				"flex flex-row items-center justify-end p-2 border rounded-sm gap-5 border-emerald-100 " +
 				(isPending ? " opacity-50" : "")
 			}
 		>

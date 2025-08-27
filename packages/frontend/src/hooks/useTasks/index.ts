@@ -27,6 +27,8 @@ export const useTasks = (): IUseTasks => {
 		onDeleteSuccess,
 		onPreDelete,
 		onEditTask,
+		onStatusUpdateSuccess,
+		onPreStatusUpdate,
 	} = createStoreHandlers(taskStore);
 
 	return {
@@ -44,7 +46,10 @@ export const useTasks = (): IUseTasks => {
 			handleTaskDelete(id, { onPreDelete, onDeleteSuccess }),
 		editTask: onEditTask,
 		updateTaskStatus: (id: ITask["id"], status: ITask["status"]) => {
-			handleTaskStatusUpdate(id, status, {});
+			handleTaskStatusUpdate(id, status, {
+				onPreUpdate: onPreStatusUpdate,
+				onUpdateSuccess: onStatusUpdateSuccess,
+			});
 		},
 	};
 };
