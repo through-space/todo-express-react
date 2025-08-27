@@ -81,15 +81,15 @@ Prisma Initialization & Migration
 ___
 ## API Endpoints
 
-| Method | Endpoint             | Description                                 | Success Code | Error Codes           |
-| ------ |----------------------|---------------------------------------------| ------------ | --------------------- |
-| GET    | `/api/stats?status=` | Returns task stats                          | 200          | —                     |
-| GET    | `/api/tasks`         | Returns list of all tasks                   | 200          | —                     |
-| GET    | `/api/tasks/{id}`    | Returns a single task by id                 | 200          | 404 (not found)       |
-| POST   | `/api/tasks`         | Creates a new task, returns Location header | 201          | —                     |
-| PUT    | `/api/tasks/{id}`    | Updates **all fields** of a task            | 200          | 400 (validation), 404 |
-| PATCH  | `/api/tasks/{id}`    | Updates only the **status** field           | 200          | 400 (validation), 404 |
-| DELETE | `/api/tasks/{id}`    | Deletes a task                              | 204          | 404 (not found)       |
+| Method | Endpoint                                         | Description                                 | Success Code | Error Codes           |
+| ------ |--------------------------------------------------|---------------------------------------------| ------------ | --------------------- |
+| GET    | `/api/stats?status=[s]`                          | Returns task stats                          | 200          | —                     |
+| GET    | `/api/tasks?status=[s]&orderBy=[f]&orderDir=[d]` | Returns list of all tasks                   | 200          | —                     |
+| GET    | `/api/tasks/{id}`                                | Returns a single task by id                 | 200          | 404 (not found)       |
+| POST   | `/api/tasks`                                     | Creates a new task, returns Location header | 201          | —                     |
+| PUT    | `/api/tasks/{id}`                                | Updates **all fields** of a task            | 200          | 400 (validation), 404 |
+| PATCH  | `/api/tasks/{id}`                                | Updates only the **status** field           | 200          | 400 (validation), 404 |
+| DELETE | `/api/tasks/{id}`                                | Deletes a task                              | 204          | 404 (not found)       |
 
 Check out [Postman Collection](to-do-app.postman_collection.json)
 ___
