@@ -128,3 +128,15 @@ export const deleteTask = async (id: Task["id"]): Promise<Task> => {
 			throw err;
 		});
 };
+
+export const getStats = (options: { status?: Task["status"] | undefined }): Promise<number> => {
+	const { status } = options;
+
+	const where: Prisma.TaskWhereInput = {};
+	if (status) {
+		where.status = status;
+	}
+	console.log(where);
+
+	return prisma.task.count({ where });
+};

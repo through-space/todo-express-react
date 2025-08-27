@@ -2,6 +2,7 @@ import {
 	createTask,
 	deleteTask,
 	getAllTasks,
+	getStats,
 	getTaskByID,
 	updateTask,
 	updateTaskStatus,
@@ -15,4 +16,5 @@ export const taskController: ITaskController = {
 	updateTask,
 	updateTaskStatus,
 	deleteTask,
+	getStats,
 };

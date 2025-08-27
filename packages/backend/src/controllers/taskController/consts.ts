@@ -1,7 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import { taskRepository } from "@repositories/task/taskRepository";
-import { Prisma } from "@prisma/client";
+import { ETaskStatus, Prisma } from "@prisma/client";
 import { ETaskRepositoryError } from "@repositories/task/types";
+import * as console from "node:console";
 
 const validateTask = (task: Prisma.TaskCreateInput): Prisma.TaskCreateInput => {
 	if (!task.title) {
@@ -159,4 +160,11 @@ export const deleteTask = (req: Request, res: Response, next: NextFunction): voi
 					res.status(500).json({ error: "Server error" });
 			}
 		});
+};
+
+export const getStats = (req: Request, res: Response, next: NextFunction): void => {
+	const status = req.query.status as ETaskStatus | undefined;
+	taskRepository.getStats({ status }).then((stats) => {
+		res.status(200).json({ stats });
+	});
 };

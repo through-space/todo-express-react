@@ -2,6 +2,7 @@ import type { ITaskRepository } from "./types";
 import {
 	createTask,
 	deleteTask,
+	getStats,
 	getTaskByID,
 	getTasks,
 	updateTask,
@@ -15,4 +16,5 @@ export const taskRepository: ITaskRepository = {
 	updateTask,
 	updateTaskStatus,
 	deleteTask,
+	getStats,
 };

@@ -7,4 +7,5 @@ export interface ITaskController {
 	updateTask: (req: Request, res: Response, next: NextFunction) => void;
 	updateTaskStatus: (req: Request, res: Response, next: NextFunction) => void;
 	deleteTask: (req: Request, res: Response, next: NextFunction) => void;
+	getStats: (req: Request, res: Response, next: NextFunction) => void;
 }

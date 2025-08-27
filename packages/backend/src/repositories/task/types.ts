@@ -7,6 +7,7 @@ export interface ITaskRepository {
 	updateTask: (id: Task["id"], task: Prisma.TaskUpdateInput) => Promise<Task>;
 	updateTaskStatus: (id: Task["id"], status: Task["status"]) => Promise<Task>;
 	deleteTask: (id: Task["id"]) => Promise<Task>;
+	getStats: (options: { status?: Task["status"] | undefined }) => Promise<number>;
 }
 
 export enum ETaskRepositoryError {
