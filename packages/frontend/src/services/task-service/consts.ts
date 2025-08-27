@@ -1,14 +1,7 @@
 import { ETaskStatus, ITask } from "@services/task-service/types";
 import { networkConfig } from "@config/network";
 import { handleError, TaskServiceError } from "@services/task-service/errors";
-import { taskService } from "@services/task-service/taskService";
-
-// getTasks: () => Promise<ITask[]>;
-// getTaskByID: (id: ITask["id"]) => Promise<ITask>;
-// createTask: (task: Partial<ITask>) => Promise<ITask>;
-// updateTask: (id: ITask["id"], task: Partial<ITask>) => Promise<ITask>;
-// updateTaskStatus: (id: ITask["id"], status: ETaskStatus) => Promise<ITask>;
-// deleteTask: (id: ITask["id"]) => Promise<void>;
+import { ITaskListSettings } from "@stores/task-store/types";
 
 const BE_URL = networkConfig.BACKEND_URL;
 const API_URL = `${BE_URL}/api/tasks`;
@@ -32,8 +25,23 @@ const fetchJson = async (url: string, options: RequestInit) => {
 	return body;
 };
 
-export const getTasks = async (): Promise<ITask[]> => {
-	return fetchJson(API_URL, { method: "GET" })
+export const getTasks = async (
+	options: Partial<ITaskListSettings>,
+): Promise<ITask[]> => {
+	const { statusFilter, orderBy, orderDirection } = options;
+	const queryParams = new URLSearchParams();
+
+	if (statusFilter && statusFilter !== "all") {
+		queryParams.set("status", statusFilter);
+	}
+
+	if (orderBy && orderDirection) {
+		queryParams.set("orderBy", orderBy);
+		queryParams.set("orderDir", orderDirection);
+	}
+
+	const queryString = queryParams.toString();
+	return fetchJson(`${API_URL}?${queryString}`, { method: "GET" })
 		.then((tasks) => tasks)
 		.catch(handleError);
 };

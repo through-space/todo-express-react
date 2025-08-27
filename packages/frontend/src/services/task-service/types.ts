@@ -1,3 +1,5 @@
+import { ITaskListSettings } from "@stores/task-store/types";
+
 export enum ETaskStatus {
 	OPEN = "OPEN",
 	IN_PROGRESS = "IN_PROGRESS",
@@ -15,7 +17,7 @@ export interface ITask {
 }
 
 export interface ITaskService {
-	getTasks: () => Promise<ITask[]>;
+	getTasks: (options: Partial<ITaskListSettings>) => Promise<ITask[]>;
 	getTaskByID: (id: ITask["id"]) => Promise<ITask>;
 	createTask: (task: Partial<ITask>) => Promise<ITask>;
 	updateTask: (id: ITask["id"], task: Partial<ITask>) => Promise<ITask>;

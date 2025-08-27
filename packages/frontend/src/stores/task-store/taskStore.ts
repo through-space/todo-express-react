@@ -1,10 +1,12 @@
 import { create } from "zustand/react";
-import { ITaskStore } from "@stores/task-store/types";
+import { ESortingNames, ITaskStore } from "@stores/task-store/types";
 import { ITask } from "@services/task-service/types";
 
 export const useTaskStore = create<ITaskStore>()((set, get) => {
 	return {
 		tasks: [],
+		settings: { sortingName: ESortingNames.UPDATED_AT_DESC },
+		setSettings: (settings: ITaskStore["settings"]) => set({ settings }),
 		getTaskById: (id: ITask["id"]): ITask | null => {
 			return get().tasks.find((task) => task.id === id) ?? null;
 		},

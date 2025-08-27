@@ -5,6 +5,7 @@ import { TaskListWrapper } from "@features/task-list/components/TaskList/TaskLis
 import { ITaskListProps } from "@features/task-list/components/TaskList/types";
 import { DeleteConfirmation } from "@features/task-list/components/DeleteConfirmation/DeleteConfirmation";
 import { ITask } from "@services/task-service/types";
+import { TaskListSettings } from "@features/task-list/components/TaskListSettings/TaskListSettings";
 
 export const TaskList: FC<ITaskListProps> = ({
 	onTaskDelete,
@@ -45,6 +46,7 @@ export const TaskList: FC<ITaskListProps> = ({
 
 	return (
 		<>
+			<TaskListSettings />
 			<DeleteConfirmation
 				deleteID={deleteID}
 				isOpen={isDeleteDialogOpen}

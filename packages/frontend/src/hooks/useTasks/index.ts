@@ -1,7 +1,7 @@
 import { taskService } from "@services/task-service/taskService";
 import { useEffect } from "react";
 import { useTaskStore } from "@stores/task-store/taskStore";
-import { ITask } from "@services/task-service/types";
+import { ETaskStatus, ITask } from "@services/task-service/types";
 import { IUseTasks } from "@hooks/useTasks/types";
 import {
 	handleTaskCreate,
@@ -13,12 +13,19 @@ import { createStoreHandlers } from "@hooks/useTasks/store";
 
 export const useTasks = (): IUseTasks => {
 	const taskStore = useTaskStore();
+	const { statusFilter, orderBy, orderDirection } = taskStore.settings;
 
 	useEffect(() => {
-		taskService.getTasks().then((tasks) => {
-			taskStore.setTasks(tasks);
-		});
-	}, []);
+		taskService
+			.getTasks({
+				statusFilter,
+				orderBy,
+				orderDirection,
+			})
+			.then((tasks) => {
+				taskStore.setTasks(tasks);
+			});
+	}, [statusFilter, orderBy, orderDirection]);
 
 	const {
 		onSaveSuccess,
