@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
 import { taskRepository } from "@repositories/task/taskRepository";
 import { ETaskStatus, Prisma } from "@prisma/client";
-import { ETaskRepositoryError } from "@repositories/task/types";
+import { EResultDirection, ETaskRepositoryError } from "@repositories/task/types";
 import * as console from "node:console";
+import { getTasks } from "@repositories/task/consts";
 
 const validateTask = (task: Prisma.TaskCreateInput): Prisma.TaskCreateInput => {
 	if (!task.title) {
@@ -13,8 +14,14 @@ const validateTask = (task: Prisma.TaskCreateInput): Prisma.TaskCreateInput => {
 };
 
 export const getAllTasks = (req: Request, res: Response, next: NextFunction): void => {
+	const { status, orderBy, orderDir } = req.query;
+
 	taskRepository
-		.getTasks()
+		.getTasks({
+			status: status as ETaskStatus | undefined,
+			orderBy: orderBy as Prisma.TaskScalarFieldEnum | undefined,
+			direction: orderDir as EResultDirection | undefined,
+		})
 		.then((tasks) => {
 			res.status(200).json(tasks);
 		})

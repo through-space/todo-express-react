@@ -1,7 +1,16 @@
 import { Prisma, type Task } from "@prisma/client";
 
+export enum EResultDirection {
+	ASC = "asc",
+	DESC = "desc",
+}
+
 export interface ITaskRepository {
-	getTasks: () => Promise<Task[]>;
+	getTasks: (options: {
+		status?: Task["status"] | undefined;
+		orderBy?: Prisma.TaskScalarFieldEnum | undefined;
+		direction?: EResultDirection | undefined;
+	}) => Promise<Task[]>;
 	getTaskByID: (id: Task["id"]) => Promise<Task | null>;
 	createTask: (task: Prisma.TaskCreateInput) => Promise<Task>;
 	updateTask: (id: Task["id"], task: Prisma.TaskUpdateInput) => Promise<Task>;

@@ -1,6 +1,12 @@
 import { Prisma, type Task, ETaskStatus } from "@prisma/client";
 import { prisma } from "../../index";
-import { EPrismaError, ETaskRepositoryError, TaskRepositoryError } from "@repositories/task/types";
+import {
+	EPrismaError,
+	EResultDirection,
+	ETaskRepositoryError,
+	TaskRepositoryError,
+} from "@repositories/task/types";
+import * as console from "node:console";
 
 const getSanitizedTask = <T extends Record<string, any>>(task: T): T => {
 	const allowedFields = new Set<keyof T>(Object.values(Prisma.TaskScalarFieldEnum));
@@ -10,10 +16,36 @@ const getSanitizedTask = <T extends Record<string, any>>(task: T): T => {
 	) as T;
 };
 
-export const getTasks = async (): Promise<Task[]> => {
+export const getTasks = async (options: {
+	status?: Task["status"] | undefined;
+	orderBy?: Prisma.TaskScalarFieldEnum | undefined;
+	direction?: EResultDirection | undefined;
+}): Promise<Task[]> => {
+	const { status, orderBy, direction } = options;
+
+	let order: Prisma.TaskOrderByWithRelationInput = {};
+	let where: Prisma.TaskWhereInput = {};
+
+	const allowedFields = new Set<keyof typeof Prisma.TaskScalarFieldEnum>(
+		Object.values(Prisma.TaskScalarFieldEnum) as (keyof typeof Prisma.TaskScalarFieldEnum)[],
+	);
+
+	if (orderBy && allowedFields.has(orderBy)) {
+		order[orderBy] = direction === EResultDirection.DESC ? "desc" : "asc";
+	} else {
+		order = {
+			updated_at: "desc",
+		};
+	}
+
+	if (status && status in ETaskStatus) {
+		where.status = status;
+	}
+
 	return prisma.task
 		.findMany({
-			orderBy: { updated_at: "desc" },
+			orderBy: order,
+			where,
 		})
 		.then((tasks) => tasks)
 		.catch((err) => {
