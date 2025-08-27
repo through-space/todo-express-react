@@ -6,10 +6,12 @@ import { TaskWrapper } from "@features/task-list/components/Task/TaskStyledCompo
 export const Task: FC<ITaskProps> = (props) => {
 	const { task } = props;
 
-	const formattedDate = new Date(task.created_at).toLocaleString();
+	const formattedDate = task.created_at
+		? new Date(task.created_at).toLocaleString()
+		: null;
 
 	return (
-		<TaskWrapper>
+		<TaskWrapper isPending={!!task?.isPending}>
 			<div>{task.title}</div>
 			<div>{task.description}</div>
 			<div>{task.status}</div>

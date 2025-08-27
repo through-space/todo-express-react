@@ -15,27 +15,20 @@ export const useTasks = (): IUseTasks => {
 		});
 	}, []);
 
-	const onSaveSuccess = (task: ITask) => {
-		if (editedTask?.id) {
-			updateTask(editedTask.id, task);
-		} else {
-			addTask(task);
-		}
-
+	const onSaveSuccess = (taskID: ITask["id"], task: ITask) => {
+		task.isPending = false;
+		updateTask(taskID, task);
 		setEditedTask(null);
-		// setTasks((tasks: ITask[]) => {
-		// 	if (task.id) {
-		// 		return tasks.map((newTask) =>
-		// 			newTask.id === task.id ? task : newTask,
-		// 		);
-		// 	} else {
-		// 		return [...tasks, task];
-		// 	}
-		// });
 	};
 
+	const onPreSave = (task: ITask) => {
+		addTask(task);
+	};
+
+	// TODO: add error handling
+
 	return {
-		saveTask: (task) => handleTaskSave(task, onSaveSuccess, () => {}),
+		saveTask: (task) => handleTaskSave(task, { onSaveSuccess, onPreSave }),
 		deleteTask: (id: string) => {},
 	};
 };

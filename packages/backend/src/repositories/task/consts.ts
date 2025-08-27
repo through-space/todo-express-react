@@ -21,7 +21,9 @@ const getSanitizedTask = <T extends Record<string, any>>(task: T): T => {
 
 export const getTasks = async (): Promise<Task[]> => {
 	return prisma.task
-		.findMany()
+		.findMany({
+			orderBy: { updated_at: "desc" },
+		})
 		.then((tasks) => tasks)
 		.catch((err) => {
 			throw err;
