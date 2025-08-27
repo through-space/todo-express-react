@@ -1,18 +1,15 @@
-import { FC, useState } from "react";
-import { useTaskService } from "@hooks/useTaskService";
+import { FC } from "react";
 import { TaskList } from "@features/task-list/components/TaskList/TaskList";
+import { TaskForm } from "@features/task-form/components/TaskForm";
+import { useTasks } from "@hooks/useTasks";
 
 export const ToDoAppPage: FC = () => {
-	useTaskService();
-	const [someNumber, setSomeNumber] = useState<number>(0);
-
-	const a = 123;
+	const { saveTask } = useTasks();
 
 	return (
 		<>
 			<TaskList />
-			<>Number3: {someNumber}</>
-			<button onClick={() => setSomeNumber(someNumber + 1)}>+ 1</button>
+			<TaskForm saveTask={saveTask} />
 		</>
 	);
 };

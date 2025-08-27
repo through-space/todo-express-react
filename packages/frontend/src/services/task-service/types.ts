@@ -11,6 +11,7 @@ export interface ITask {
 	status?: ETaskStatus;
 	created_at?: string;
 	updated_at?: string;
+	isPending?: boolean;
 }
 
 export interface ITaskService {

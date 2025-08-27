@@ -95,6 +95,10 @@ ___
   - [x] ts 
     - [x] ts aliasing
   - [x] prettier 
+  - [ ] Task List
+  - [ ] Task Form
+    - [ ] Form Basic Functionality
+    - [ ] Show validation errors
   - [ ] Design
       - [ ] add tailwind
   - [ ] Error Handling

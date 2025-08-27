@@ -14,6 +14,10 @@ const BE_URL = networkConfig.BACKEND_URL;
 const API_URL = `${BE_URL}/api/tasks`;
 
 const fetchJson = async (url: string, options: RequestInit) => {
+	options.headers = {
+		"Content-Type": "application/json",
+	};
+
 	const res = await fetch(url, options);
 
 	let body: any = null;

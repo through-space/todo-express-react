@@ -1,6 +1,7 @@
 import { useTaskStore } from "@stores/task-store/taskStore";
 import { FC } from "react";
 import { Task } from "@features/task-list/components/Task/Task";
+import { TaskListWrapper } from "@features/task-list/components/TaskList/TaskListStyledComponents";
 
 export const TaskList: FC = () => {
 	const { tasks } = useTaskStore();
@@ -9,6 +10,5 @@ export const TaskList: FC = () => {
 
 	const taskItems = tasks.map((task) => <Task key={task.id} task={task} />);
 
-	// todo: add wrappers
-	return <>{taskItems}</>;
+	return <TaskListWrapper>{taskItems}</TaskListWrapper>;
 };

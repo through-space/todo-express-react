@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import { taskRepository } from "@repositories/task/taskRepository";
 import { Prisma } from "@prisma/client";
 import { ETaskRepositoryError } from "@repositories/task/types";
+import * as console from "node:console";
 
 const validateTask = (task: Prisma.TaskCreateInput): Prisma.TaskCreateInput => {
 	if (!task.title) {

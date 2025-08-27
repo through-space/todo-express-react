@@ -1,5 +1,5 @@
 export const handleError = (err: any) => {
-	console.log("err", err);
+	console.log("err.message", err);
 	console.log("err.code", err.code);
 };
 

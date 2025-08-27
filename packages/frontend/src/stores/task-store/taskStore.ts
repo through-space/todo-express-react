@@ -6,5 +6,18 @@ export const useTaskStore = create<ITaskStore>()((set) => {
 	return {
 		tasks: [],
 		setTasks: (tasks: ITask[]) => set({ tasks }),
+		addTask: (task: ITask) => (tasks: ITask[]) =>
+			set({ tasks: [...tasks, task] }),
+		updateTask:
+			(id: ITask["id"], task: Partial<ITask>) => (tasks: ITask[]) =>
+				set({
+					tasks: tasks.map((existingTask) =>
+						existingTask.id === id
+							? { ...existingTask, ...task }
+							: existingTask,
+					),
+				}),
+		editedTask: null,
+		setEditedTask: (task: ITask | null) => set({ editedTask: task }),
 	};
 });
