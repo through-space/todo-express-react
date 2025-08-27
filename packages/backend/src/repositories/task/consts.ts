@@ -1,16 +1,6 @@
 import { Prisma, type Task, ETaskStatus } from "@prisma/client";
 import { prisma } from "../../index";
 import { EPrismaError, ETaskRepositoryError, TaskRepositoryError } from "@repositories/task/types";
-import * as console from "node:console";
-
-// getTasks: () => Task[];
-// getTaskByID: (id: Task["id"]) => Task | null;
-// createTask: (task: Task) => Task;
-// updateTask: (id: Task["id"], task: Task) => Task;
-// updateTaskStatus: (id: Task["id"], status: Task["status"]) => Task;
-// deleteTask: (id: Task["id"]) => void;
-
-// TODO: error handling
 
 const getSanitizedTask = <T extends Record<string, any>>(task: T): T => {
 	const allowedFields = new Set<keyof T>(Object.values(Prisma.TaskScalarFieldEnum));
@@ -59,7 +49,7 @@ export const updateTask = async (id: Task["id"], task: Prisma.TaskUpdateInput): 
 
 	task.updated_at = new Date();
 	const sanitizedTask = getSanitizedTask<Prisma.TaskUpdateInput>(task);
-	console.log(typeof sanitizedTask.status, sanitizedTask.status);
+
 	return prisma.task
 		.update({ data: sanitizedTask, where: { id } })
 		.then((task) => task)
@@ -77,9 +67,6 @@ export const updateTask = async (id: Task["id"], task: Prisma.TaskUpdateInput): 
 			} else {
 				throw err;
 			}
-
-			// console.log("throwing in error");
-			// throw err;
 		});
 };
 

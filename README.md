@@ -135,8 +135,8 @@ ___
   - [x] CRUD
     - [x] updated-at
   - [ ] Error Handling
-- [ ] Remove ToDos
-- [ ] Remove console.log
-- [ ] Describe API endpoints
-- [ ] Add github repo + readme instructions
+- [x] Remove ToDos
+- [x] Remove console.log
+- [x] Describe API endpoints
+- [x] Add Github repo + readme instructions
 - [ ] Tests

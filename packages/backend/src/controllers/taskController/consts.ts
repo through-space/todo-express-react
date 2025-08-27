@@ -88,8 +88,6 @@ export const updateTask = (req: Request, res: Response, next: NextFunction): voi
 			res.status(200).json(task);
 		})
 		.catch((err) => {
-			// console.log("1111");
-			// console.log(typeof err);
 			switch (err?.cause) {
 				case ETaskRepositoryError.TASK_NOT_FOUND:
 					res.status(404).json({ error: "Task not found" });
