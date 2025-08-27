@@ -3,12 +3,16 @@ import { useEffect } from "react";
 import { useTaskStore } from "@stores/task-store/taskStore";
 import { ITask } from "@services/task-service/types";
 import { IUseTasks } from "@hooks/useTasks/types";
-import { handleTaskDelete, handleTaskSave } from "@hooks/useTasks/consts";
+import {
+	handleTaskDelete,
+	handleTaskCreate,
+	handleTaskUpdate,
+} from "@hooks/useTasks/consts";
 import { deleteTask } from "@services/task-service/consts";
 
 export const useTasks = (): IUseTasks => {
 	const {
-		editedTask,
+		getTaskById,
 		setEditedTask,
 		setTasks,
 		addTask,
@@ -28,8 +32,11 @@ export const useTasks = (): IUseTasks => {
 	};
 
 	const onPreSave = (task: ITask) => {
-		task.isPending = true;
-		addTask(task);
+		addTask({ ...task, isPending: true });
+	};
+
+	const onPreUpdate = (task: ITask) => {
+		updateTask(task.id, { isPending: true });
 	};
 
 	const onPreDelete = (taskID: ITask["id"]) => {
@@ -40,11 +47,26 @@ export const useTasks = (): IUseTasks => {
 		deleteTask(taskID);
 	};
 
+	const onEditTask = (id: ITask["id"]) => {
+		const task = getTaskById(id);
+		setEditedTask(task);
+	};
+
 	// TODO: add error handling
 
 	return {
-		saveTask: (task) => handleTaskSave(task, { onSaveSuccess, onPreSave }),
+		saveTask: (task) => {
+			if (task?.id) {
+				handleTaskUpdate(task, {
+					onSaveSuccess,
+					onPreSave: onPreUpdate,
+				});
+			} else {
+				handleTaskCreate(task, { onSaveSuccess, onPreSave });
+			}
+		},
 		deleteTask: (id: string) =>
 			handleTaskDelete(id, { onPreDelete, onDeleteSuccess }),
+		editTask: onEditTask,
 	};
 };

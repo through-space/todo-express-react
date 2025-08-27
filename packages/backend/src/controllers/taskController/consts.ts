@@ -50,59 +50,63 @@ export const getTaskByID = (req: Request, res: Response, next: NextFunction): vo
 };
 
 export const createTask = (req: Request, res: Response, next: NextFunction): void => {
-	const task: Prisma.TaskCreateInput = req.body;
+	setTimeout(() => {
+		const task: Prisma.TaskCreateInput = req.body;
 
-	try {
-		validateTask(task);
-	} catch (err) {
-		if (err instanceof Error) {
-			res.status(400).json({ error: err?.message });
-			next();
+		try {
+			validateTask(task);
+		} catch (err) {
+			if (err instanceof Error) {
+				res.status(400).json({ error: err?.message });
+				next();
+			}
 		}
-	}
 
-	task.updated_at = new Date();
+		task.updated_at = new Date();
 
-	taskRepository
-		.createTask(task)
-		.then((task) => {
-			res.status(201).location(`/api/tasks/${task.id}`).json(task);
-		})
-		.catch((err) => {
-			res.status(500).json({ error: "Server error" });
-		})
-		.finally(next);
+		taskRepository
+			.createTask(task)
+			.then((task) => {
+				res.status(201).location(`/api/tasks/${task.id}`).json(task);
+			})
+			.catch((err) => {
+				res.status(500).json({ error: "Server error" });
+			})
+			.finally(next);
+	}, 2000);
 };
 
 export const updateTask = (req: Request, res: Response, next: NextFunction): void => {
-	const { id } = req.params;
-	const task: Prisma.TaskUpdateInput = req.body;
+	setTimeout(() => {
+		const { id } = req.params;
+		const task: Prisma.TaskUpdateInput = req.body;
 
-	if (!id) {
-		res.status(400).json({ error: "Invalid Task ID" });
-		return;
-	}
+		if (!id) {
+			res.status(400).json({ error: "Invalid Task ID" });
+			return;
+		}
 
-	taskRepository
-		.updateTask(id, task)
-		.then((task) => {
-			res.status(200).json(task);
-		})
-		.catch((err) => {
-			switch (err?.cause) {
-				case ETaskRepositoryError.TASK_NOT_FOUND:
-					res.status(404).json({ error: "Task not found" });
-					break;
-				case ETaskRepositoryError.TASK_VALIDATION_ERROR:
-					res.status(400).json({ error: "Validation error" });
-					break;
-				default:
-					res.status(500).json({ error: "Server error" });
-			}
-		})
-		.finally(() => {
-			next();
-		});
+		taskRepository
+			.updateTask(id, task)
+			.then((task) => {
+				res.status(200).json(task);
+			})
+			.catch((err) => {
+				switch (err?.cause) {
+					case ETaskRepositoryError.TASK_NOT_FOUND:
+						res.status(404).json({ error: "Task not found" });
+						break;
+					case ETaskRepositoryError.TASK_VALIDATION_ERROR:
+						res.status(400).json({ error: "Validation error" });
+						break;
+					default:
+						res.status(500).json({ error: "Server error" });
+				}
+			})
+			.finally(() => {
+				next();
+			});
+	}, 3000);
 };
 
 export const updateTaskStatus = (req: Request, res: Response, next: NextFunction): void => {
@@ -142,31 +146,33 @@ export const updateTaskStatus = (req: Request, res: Response, next: NextFunction
 };
 
 export const deleteTask = (req: Request, res: Response, next: NextFunction): void => {
-	const { id } = req.params;
+	setTimeout(() => {
+		const { id } = req.params;
 
-	if (!id) {
-		res.status(400).json({ message: "Invalid Task ID" });
-		return;
-	}
+		if (!id) {
+			res.status(400).json({ message: "Invalid Task ID" });
+			return;
+		}
 
-	taskRepository
-		.deleteTask(id)
-		.then((task) => {
-			res.status(204).json(task);
-		})
-		.catch((err) => {
-			switch (err?.cause) {
-				case ETaskRepositoryError.TASK_NOT_FOUND:
-					res.status(404).json({ error: "Task not found" });
-					break;
-				case ETaskRepositoryError.TASK_VALIDATION_ERROR:
-					res.status(400).json({ error: err?.message });
-					break;
-				default:
-					res.status(500).json({ error: "Server error" });
-			}
-		})
-		.finally(() => {
-			next();
-		});
+		taskRepository
+			.deleteTask(id)
+			.then((task) => {
+				res.status(204).json(task);
+			})
+			.catch((err) => {
+				switch (err?.cause) {
+					case ETaskRepositoryError.TASK_NOT_FOUND:
+						res.status(404).json({ error: "Task not found" });
+						break;
+					case ETaskRepositoryError.TASK_VALIDATION_ERROR:
+						res.status(400).json({ error: err?.message });
+						break;
+					default:
+						res.status(500).json({ error: "Server error" });
+				}
+			})
+			.finally(() => {
+				next();
+			});
+	}, 3000);
 };

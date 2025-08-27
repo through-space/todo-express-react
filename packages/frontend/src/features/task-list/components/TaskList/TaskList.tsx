@@ -31,7 +31,7 @@ export const TaskList: FC<ITaskListProps> = ({ onTaskDelete, onTaskEdit }) => {
 		<Task
 			key={task.id}
 			task={task}
-			onEdit={() => {}}
+			onEdit={onTaskEdit}
 			onDelete={openDeleteDialog}
 		/>
 	));

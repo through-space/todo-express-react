@@ -2,9 +2,12 @@ import { create } from "zustand/react";
 import { ITaskStore } from "@stores/task-store/types";
 import { ITask } from "@services/task-service/types";
 
-export const useTaskStore = create<ITaskStore>()((set) => {
+export const useTaskStore = create<ITaskStore>()((set, get) => {
 	return {
 		tasks: [],
+		getTaskById: (id: ITask["id"]): ITask | null => {
+			return get().tasks.find((task) => task.id === id) ?? null;
+		},
 		setTasks: (tasks: ITask[]) => set({ tasks }),
 		addTask: (task: ITask) =>
 			set((state) => {
@@ -31,6 +34,14 @@ export const useTaskStore = create<ITaskStore>()((set) => {
 			});
 		},
 		editedTask: null,
-		setEditedTask: (task: ITask | null) => set({ editedTask: task }),
+		setEditedTask: (task: ITask) =>
+			set((state) => {
+				if (!task) {
+					return { editedTask: null };
+				}
+				return {
+					editedTask: { ...task },
+				};
+			}),
 	};
 });
