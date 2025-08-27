@@ -123,7 +123,7 @@ ___
     - [ ] Show validation errors
   - [x] Design
       - [x] add tailwind
-  - [ ] Error Handling
+  - [x] Error Handling
   - [ ] Save Button Disable
 - [ ] Backend
   - [ ] Restrict update fields / check updated_at
@@ -136,7 +136,7 @@ ___
   - [x] Tasks Controller && Repo
   - [x] CRUD
     - [x] updated-at
-  - [ ] Error Handling
+  - [x] Error Handling
 - [x] Remove ToDos
 - [x] Remove console.log
 - [x] Describe API endpoints
