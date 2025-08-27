@@ -23,7 +23,6 @@ ___
 
 ___
 
-
 ## Getting Started
 
 ### Development
@@ -36,12 +35,17 @@ Use these instructions to Develop and Run the project locally
 
 #### Installation
 
+##### Git
+```sh
+  git clone git@github.com:through-space/todo-express-react.git
+```
+
 ##### .env
 Copy and alter .env file `🚩 REQUIERED_FOR_RUNNING`
 
 ```sh
+  cd todo-express-react
   cp .env.example .env
-
 ```
 *Next step is necessary only for local development*
 ```sh
@@ -99,7 +103,7 @@ ___
 ___
 
 ## ToDo
-- [ ] Initialize
+- [x] Initialize
     - [x] Git
     - [x] Docker
       - [x] compose
